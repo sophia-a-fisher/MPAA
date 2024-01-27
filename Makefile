@@ -5,5 +5,5 @@ SHELL         := bash
 run_mov: run_movie.cpp
 	$(CXX) $(CXXFLAGS) run_movie.cpp -o run_movie
 
-run: run_mov ./MPAA_Data/2000.txt
-	./run_movie < ./MPAA_Data/2000.txt 
+run: run_mov ./MPAA_Data/2005.txt
+	./run_movie < ./MPAA_Data/2005.txt 
