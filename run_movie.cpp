@@ -22,7 +22,7 @@ void calc_reason(vector<string>& myVec){
     string reason = myVec[2];
 
     // Checking for sexuality
-    if(reason.find("sex") != std::string::npos){
+    if(reason.find("sex") != std::string::npos || reason.find("sensual") != std::string::npos){
         myVec.insert(myVec.end(), "1 ");  
     } else {
         myVec.insert(myVec.end(), "0 "); 
@@ -36,7 +36,13 @@ void calc_reason(vector<string>& myVec){
     }
 
     // Checking for violence
-    if(reason.find("viol") != std::string::npos){
+    if((reason.find("viol") != std::string::npos)) {//|| 
+    //(reason.find("gore") != std::string::npos) || 
+    //(reason.find("disturb") != std::string::npos) ||
+    //(reason.find("blood") != std::string::npos) ||
+    //(reason.find("grisly") != std::string::npos) ||
+    //(reason.find("war") != std::string::npos) ||
+    //(reason.find("rape") != std::string::npos)){
         myVec.insert(myVec.end(), "1 ");  
     } else {
         myVec.insert(myVec.end(), "0 "); 
@@ -50,7 +56,11 @@ void calc_reason(vector<string>& myVec){
     }
 
     // Checking for substance
-    if(reason.find("drug") != std::string::npos){
+    if((reason.find("drug") != std::string::npos)){// || 
+    //(reason.find("substance") != std::string::npos) || 
+    //(reason.find("alcohol") != std::string::npos) || 
+    //(reason.find("smoking") != std::string::npos) ||
+    //(reason.find("drink") != std::string::npos)) {
         myVec.insert(myVec.end(), "1 ");  
     } else {
         myVec.insert(myVec.end(), "0 "); 
@@ -68,9 +78,10 @@ vector<string> movie_read (int i, ofstream& myfile) {
         // Getting title
         getline(cin, s_next);
         if(!cin){return movie_dat;}
-
+        
+        // For > 2011 the cutoff has to be 0, for < 2011 must be 1 
         // read scores
-        while (s_next.length() > 1 && !s_next.empty() && cin) {
+        while (s_next.length() > 0 && !s_next.empty() && cin) {
             replace (s_next.begin(), s_next.end(), ',' , ' ');
             movie_dat.insert(movie_dat.end(), s_next);
             //s = s_next;
@@ -122,14 +133,15 @@ void vec_to_file(ofstream& myfile, vector<string>& headers){
         for(string s : headers){
                 //if(!s.empty()){
                     total += s;
-                if (!total.empty()) {
+                // for > 2011 must have the if(), for < 2011 don't need 
+                if (!total.empty() && total[total.length()-1] == ' ') {
                 total.erase(total.length()-1);}
                 total += ", ";
                 //}
                 
-            }
-            total.erase(total.length()-2);
-            myfile << total << endl;
+        }
+        total.erase(total.length()-2);
+        myfile << total << endl;
     }
 }
 
